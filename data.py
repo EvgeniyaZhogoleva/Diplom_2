@@ -17,9 +17,34 @@ class TestData:
             "email": "zho1goleva_6811823@ya.ru",
             "password": "123456"
         }
+    WRONG_AUTH_PAYLOAD = payload = {
+            "email": "invalid@ya.ru",
+            "password": "987654"
+        }
+    ALREADY_REGISTERED_USER = payload = {
+            "email": "test-data@yandex.ru",
+            "password": "123456",
+            "name": "Username"
+        }
+    WITHOUT_FILLING = payload = {
+            "email": "test-data@yandex.ru",
+        }
+    CHANGE_DATA = payload = {
+            "email": "6811823@ya.ru",
+            "password": "1234567",
+            "name": "jane"
+        }
+
 
 class Ingredients:
     INGREDIENTS = {
             "ingredients": ["61c0c5a71d1f82001bdaaa6d", "61c0c5a71d1f82001bdaaa6f"]
         }
+    WRONG_INGREDIENTS = {
+            "ingredients": ["11223344"]
+        }
+    EMPTY_INGREDIENTS = {
+            "ingredients": []
+        }
+
 

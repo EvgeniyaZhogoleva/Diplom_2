@@ -1,8 +1,7 @@
 import requests
 import allure
-from data import DataURL
-from data import DataAnswerText
-from conftest import TestUser
+from data import DataURL, DataAnswerText, TestData
+from helpers import User
 
 base_url = f'{DataURL.BASE_URL}/api/auth/register'
 
@@ -11,7 +10,7 @@ class TestCreateNewUser:
     @allure.title('Тест создания нового пользователя')
     @allure.description('Тест создания уникального пользователя')
     def test_create_new_user(self):
-        test_courier = TestUser()
+        test_courier = User()
         payload = test_courier.NEW_USER
         response = requests.post(base_url, json=payload)
         assert 200 == response.status_code
@@ -19,11 +18,7 @@ class TestCreateNewUser:
 
     @allure.title('Создание пользователя, который уже зарегистрирован')
     def test_create_existing_user(self):
-        payload = {
-            "email": "test-data@yandex.ru",
-            "password": "123456",
-            "name": "Username"
-        }
+        payload = TestData.ALREADY_REGISTERED_USER
         response = requests.post(base_url, json=payload)
         assert 403 == response.status_code
         assert response.json()["message"] == DataAnswerText.USER_ALREADY_EXIST["message"]
@@ -31,9 +26,7 @@ class TestCreateNewUser:
 
     @allure.title('Создание пользователя без заполнения обязательного поля')
     def test_create_user_missing_field(self):
-        payload = {
-            "email": "test-data@yandex.ru",
-        }
+        payload = TestData.WITHOUT_FILLING
         response = requests.post(base_url, json=payload)
         assert 403 == response.status_code
         assert response.json()["message"] == DataAnswerText.NOT_ENOUGH_DATA_FOR_CREATE["message"]

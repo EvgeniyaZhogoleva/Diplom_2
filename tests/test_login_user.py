@@ -19,10 +19,7 @@ class TestUserLogin:
 
     @allure.description('Логин с неверным логином и паролем')
     def test_login_with_invalid_login_and_password(self):
-        payload = {
-            "email": "invalid@ya.ru",
-            "password": "987654"
-        }
+        payload = TestData.WRONG_AUTH_PAYLOAD
         response = requests.post(base_url, json=payload)
         assert 401 == response.status_code
         assert response.json()["message"] == DataAnswerText.INVALID_LOGIN_PASSWORD["message"]
